@@ -1,0 +1,45 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'org.beryx.jlink' version '3.0.1'
+}
+
+repositories {
+    mavenCentral()
+}
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+javafx {
+    version = "21.0.3"
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.graphics', 'javafx.web']
+}
+
+application {
+    mainClass = "org.javafxgoogleapi.App"
+    mainModule = "javafxgoogleapi"
+}
+
+jlink {
+    options = ['--strip-debug', '--compress', 'zip-6', '--no-header-files', '--no-man-pages']
+    launcher {
+        name = 'javafxgoogleapi'
+    }
+    mergedModule {
+        requires 'java.logging';
+        requires 'jdk.httpserver';
+        requires 'jakarta.inject';
+        requires 'com.google.gson';
+    }
+}
+
+dependencies {
+    implementation 'com.google.inject:guice:7.0.0'
+	implementation 'com.google.api-client:google-api-client:2.6.0'
+	implementation 'com.google.oauth-client:google-oauth-client-jetty:1.36.0'
+    implementation 'com.google.apis:google-api-services-drive:v3-rev20240628-2.0.0'
+}
